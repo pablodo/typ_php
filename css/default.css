@@ -1,0 +1,72 @@
+body{
+	font-family: Arial;	
+  background-color: rgb(255,240,240);
+}
+
+table, td, th  {
+  border: 1px solid;
+  border-collapse: collapse;
+  table-layout: auto;
+  border-radius: 5px;
+  padding: 3px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.main{
+	display: block;
+	overflow: hidden;
+	margin: 0 auto;
+	border: 2px solid gray;
+	border-radius: 10px;
+	padding: 20px;
+	text-align: center;
+	width: 500px;
+    margin-top: 50px;
+}
+
+.main h1{
+	border-bottom: 1px solid gray;
+	padding-bottom: 20px;			
+}
+
+.main h2{
+	color: rgb(80,80,0);			
+}
+
+.login{
+	width: 300px;
+	margin: 0 auto;
+	margin: 20px auto;
+}
+
+.login-image{
+  width: 500px;
+  opacity: 1;
+}
+
+.login .input-line{
+	display: block;
+	overflow: hidden;
+	margin-bottom: 4px;
+}
+
+.login .input-line label{
+	float: left;
+	margin-top: 3px;	
+}
+
+.login .input-line input{
+	float: right;
+}
+
+.submit{
+  margin-top: 15px;
+}
+
+.invalid-user{
+	display: block;
+	padding-bottom: 20px;
+	color: red;
+	font-weight: bold;
+}
+
