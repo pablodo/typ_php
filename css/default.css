@@ -1,25 +1,34 @@
 body{
-	font-family: Arial;	
-  background-color: rgb(255,240,240);
+  font-family: Arial;
+  background-color: rgb(255,250,230);
 }
 
 table, td, th  {
   font-size: 14px;
-  border: 1px solid;
+  border: 1px solid rgb(200,200,200);
   border-collapse: collapse;
-  table-layout: auto;
-  border-radius: 5px;
   padding: 3px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 20px;
+  margin-top: 20px;
 }
+
+table {
+  border-color: black;
+  border-width: 2px;
+}
+
+th {
+  border-bottom-color: black;
+  border-bottom-width: 2px;
+}
+
 .main{
 	display: block;
 	overflow: hidden;
 	margin: 0 auto;
 	border: 2px solid gray;
-	border-radius: 10px;
+	border-radius: 6px;
 	padding: 20px;
 	text-align: center;
 	width: 500px;
@@ -33,6 +42,36 @@ table, td, th  {
 
 .main h2{
 	color: rgb(80,80,0);			
+}
+
+.movimientos {
+    font-family: sans-serif;
+    width: 800px;
+}
+
+.movimientos .t1, .t2, .t3, .t6{
+    text-align: left;
+}
+
+.movimientos .t4, .t5, .t7, .t8, .t9{
+    font-family: monospace;
+    text-align: right;
+}
+
+.movimientos .t1, .t2, .t3 {
+    width: 80px;
+}
+
+.movimientos h2{
+    margin-top: 0px;
+    text-align: left;
+	color: rgb(80,80,0);			
+    padding-bottom: 10px;
+	border-bottom: 1px solid gray;
+}
+
+.movimientos label{
+    font-size: 18px;
 }
 
 .login{

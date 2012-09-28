@@ -14,82 +14,44 @@ class UsuarioView{
     <link href="css/default.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <div class="main">
-      <?php 
-        if ($this->usuario->mostrarReservas()){
-      ?>
-          <table>
-            <th>Unidad</th>
-            <th>Estado</th>
-            <th>Desde</th>
-            <th>Hasta</th>
-            <?php
-                foreach($this->usuario->reservas as $reserva){
-            ?>
-                  <tr>
-                    <td><?php echo $reserva['unidad']?></td>
-                    <td><?php echo $reserva['estado']?></td>
-                    <td><?php echo $reserva['fecha_in']?></td>
-                    <td><?php echo $reserva['fecha_out']?></td>
-                  </tr>
-            <?php
-            }
-            ?>
-          </table>
-      <?php 
-        }else{
-      ?>
-          <label>No se encontraron unidades reservadas</label>
+    <div class="main movimientos">
+    <h2>Bienvenido <?php echo $this->usuario->nombre ?></h2>
       <?php
-        }
         if ($this->usuario->mostrarMovimientos()){
       ?>
           <table>
-            <th>Fecha</th>
-            <th>Comercializadora</th>
-            <th>Propietario</th>
+            <th>Fecha Operacion</th>
+            <th>Alquiler Desde</th>
+            <th>Alquiler Hasta</th>
+            <th>Desayunos</th>
+            <th>Total Alquiler</th>
+            <th>Detalle de la Operación</th>
+            <th>Saldo</th>
+            <th>Cobrado cta. Propietario</th>
+            <th>Cobrado cta. Comercializadora</th>
             <?php
                 foreach($this->usuario->movimientos as $movimientos){
             ?>
                   <tr>
-                    <td><?php echo $movimientos['fecha']?></td>
-                    <td><?php echo $movimientos['comercializadora']?></td>
-                    <td><?php echo $movimientos['propietario']?></td>
+                    <td class="t1"><?php echo $movimientos['fecha_operacion']?></td>
+                    <td class="t2"><?php echo $movimientos['fecha_in']?></td>
+                    <td class="t3"><?php echo $movimientos['fecha_out']?></td>
+                    <td class="t4"><?php echo $movimientos['desayunos']?></td>
+                    <td class="t5"><?php echo $movimientos['total_alquiler']?></td>
+                    <td class="t6"><?php echo $movimientos['detalle']?></td>
+                    <td class="t7"><?php echo $movimientos['saldo']?></td>
+                    <td class="t8"><?php echo $movimientos['cobrado_propietario']?></td>
+                    <td class="t9"><?php echo $movimientos['cobrado_comercializadora']?></td>
                   </tr>
             <?php
-            }
+                }
             ?>
           </table>
       <?php
         }else{ 
       ?>
-          <label>No se encontraron movimientos historicos</label>
+          <label>No se encontraron movimientos</label>
       <?php
-        }
-
-        if ($this->usuario->mostrarHistorico()){
-      ?>
-          <table>
-            <th>Fecha</th>
-            <th>Comercializadora</th>
-            <th>Propietario</th>
-            <?php
-                foreach($this->usuario->historico as $historico){
-            ?>
-                  <tr>
-                    <td><?php echo $historico['fecha']?></td>
-                    <td><?php echo $historico['comercializadora']?></td>
-                    <td><?php echo $historico['propietario']?></td>
-                  </tr>
-            <?php
-            }
-            ?>
-          </table>
-      <?php 
-        }else{ 
-      ?>
-          <label>No se encontraron movimientos historicos</label>
-      <?php 
         }
       ?>
     </div>
