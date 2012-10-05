@@ -30,19 +30,36 @@ class UsuarioView{
             <th>Cobrado cta. Propietario</th>
             <th>Cobrado cta. Comercializadora</th>
             <?php
+                if ($this->usuario->mostrarLiquidaciones()){
+                  foreach($this->usuario->liquidaciones as $liquidaciones){
+            ?>
+                    <tr>
+                      <td class="t1"><?php echo $liquidaciones['fecha']?></td>
+                      <td class="t2"><?php echo ""?></td>
+                      <td class="t3"><?php echo ""?></td>
+                      <td class="t4"><?php echo ""?></td>
+                      <td class="t5"><?php echo ""?></td>
+                      <td class="t6"><?php echo ""?></td>
+                      <td class="t7"><?php echo $liquidaciones['saldo']?></td>
+                      <td class="t8"><?php echo ""?></td>
+                      <td class="t9"><?php echo ""?></td>
+                    </tr>
+            <?php
+                  }
+                }
                 foreach($this->usuario->movimientos as $movimientos){
             ?>
-                  <tr>
-                    <td class="t1"><?php echo $movimientos['fecha_operacion']?></td>
-                    <td class="t2"><?php echo $movimientos['fecha_in']?></td>
-                    <td class="t3"><?php echo $movimientos['fecha_out']?></td>
-                    <td class="t4"><?php echo $movimientos['desayunos']?></td>
-                    <td class="t5"><?php echo $movimientos['total_alquiler']?></td>
-                    <td class="t6"><?php echo $movimientos['detalle']?></td>
-                    <td class="t7"><?php echo $movimientos['saldo']?></td>
-                    <td class="t8"><?php echo $movimientos['cobrado_propietario']?></td>
-                    <td class="t9"><?php echo $movimientos['cobrado_comercializadora']?></td>
-                  </tr>
+                    <tr>
+                      <td class="t1"><?php echo $movimientos['fecha_operacion']?></td>
+                      <td class="t2"><?php echo $movimientos['fecha_in']?></td>
+                      <td class="t3"><?php echo $movimientos['fecha_out']?></td>
+                      <td class="t4"><?php echo $movimientos['desayunos']?></td>
+                      <td class="t5"><?php echo $movimientos['total_alquiler']?></td>
+                      <td class="t6"><?php echo $movimientos['detalle']?></td>
+                      <td class="t7"><?php echo $movimientos['saldo']?></td>
+                      <td class="t8"><?php echo $movimientos['cobrado_propietario']?></td>
+                      <td class="t9"><?php echo $movimientos['cobrado_comercializadora']?></td>
+                    </tr>
             <?php
                 }
             ?>
