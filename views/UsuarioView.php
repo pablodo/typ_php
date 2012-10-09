@@ -17,7 +17,7 @@ class UsuarioView{
     <div class="main movimientos">
     <h2>Bienvenido <?php echo $this->usuario->nombre ?></h2>
       <?php
-        if ($this->usuario->mostrarMovimientos()){
+        if ($this->usuario->mostrarMovimientos() || $this->usuario->mostrarLiquidaciones()){
       ?>
           <table>
             <th>Fecha Operacion</th>

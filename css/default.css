@@ -7,7 +7,7 @@ table, td, th  {
   font-size: 14px;
   border: 1px solid rgb(200,200,200);
   border-collapse: collapse;
-  padding: 3px;
+  padding: 2px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
@@ -21,6 +21,10 @@ table {
 th {
   border-bottom-color: black;
   border-bottom-width: 2px;
+}
+
+td {
+    padding: 3px;
 }
 
 .main{
@@ -49,17 +53,20 @@ th {
     width: 800px;
 }
 
-.movimientos .t1, .t2, .t3, .t6{
+.movimientos .t6{
     text-align: left;
 }
 
 .movimientos .t4, .t5, .t7, .t8, .t9{
-    font-family: monospace;
     text-align: right;
 }
 
 .movimientos .t1, .t2, .t3 {
-    width: 80px;
+    width: 60px;
+}
+
+.movimientos .t5{
+    width: 100px;
 }
 
 .movimientos h2{

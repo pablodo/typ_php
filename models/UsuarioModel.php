@@ -1,9 +1,9 @@
 <?php
 require_once "models/LiquidacionModel.php";
 class Funciones{
-
     public static function formatFecha($fecha){
-        return substr($fecha, 0, 10);
+        $fecha = new DateTime($fecha);
+        return $fecha->format('d-m-y');
     }
 }
 
