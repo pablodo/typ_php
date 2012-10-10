@@ -53,20 +53,24 @@ td {
     width: 900px;
 }
 
-.movimientos .t6{
+.movimientos .td_detalle{
     text-align: left;
 }
 
-.movimientos .t4, .t5, .t7, .t8, .t9, .t10{
+.movimientos .td_importe, .td_numero{
     text-align: right;
 }
 
-.movimientos .t1, .t2, .t3 {
+.movimientos .td_fecha {
     width: 60px;
 }
 
-.movimientos .t5, .t8{
+.movimientos .td_importante{
     width: 100px;
+}
+
+.movimientos .totales{
+    font-weight: bold;
 }
 
 .movimientos h2{

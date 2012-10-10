@@ -26,24 +26,25 @@ class UsuarioView{
             <th>Desayunos</th>
             <th>Total Alquiler</th>
             <th>Detalle de la Operación</th>
-            <th>Comisión</th>
             <th>Saldo</th>
             <th>Cobrado cta. Propietario</th>
             <th>Cobrado cta. Comercializadora</th>
+            <th>Comisión</th>
             <?php
                 if ($this->usuario->mostrarLiquidaciones()){
                   foreach($this->usuario->liquidaciones as $liquidaciones){
             ?>
                     <tr>
-                      <td class="t1"><?php echo $liquidaciones['fecha']?></td>
-                      <td class="t2"><?php echo ""?></td>
-                      <td class="t3"><?php echo ""?></td>
-                      <td class="t4"><?php echo ""?></td>
-                      <td class="t5"><?php echo ""?></td>
-                      <td class="t6"><?php echo ""?></td>
-                      <td class="t7"><?php echo $liquidaciones['saldo']?></td>
-                      <td class="t8"><?php echo ""?></td>
-                      <td class="t9"><?php echo ""?></td>
+                      <td class="td_fecha"><?php echo $liquidaciones['fecha']?></td>
+                      <td class="td_fecha"><?php echo ""?></td>
+                      <td class="td_fecha"><?php echo ""?></td>
+                      <td class="td_numero"><?php echo ""?></td>
+                      <td class="td_importe"><?php echo ""?></td>
+                      <td class="td_detalle"><?php echo ""?></td>
+                      <td class="td_importe"><?php echo $liquidaciones['saldo']?></td>
+                      <td class="td_importe"><?php echo ""?></td>
+                      <td class="td_importe"><?php echo ""?></td>
+                      <td class="td_importe"><?php echo ""?></td>
                     </tr>
             <?php
                   }
@@ -51,20 +52,32 @@ class UsuarioView{
                 foreach($this->usuario->movimientos as $movimientos){
             ?>
                     <tr>
-                      <td class="t1"><?php echo $movimientos['fecha_operacion']?></td>
-                      <td class="t2"><?php echo $movimientos['fecha_in']?></td>
-                      <td class="t3"><?php echo $movimientos['fecha_out']?></td>
-                      <td class="t4"><?php echo $movimientos['desayunos']?></td>
-                      <td class="t5"><?php echo $movimientos['total_alquiler']?></td>
-                      <td class="t6"><?php echo $movimientos['detalle']?></td>
-                      <td class="t7"><?php echo $movimientos['comision']?></td>
-                      <td class="t8"><?php echo $movimientos['saldo']?></td>
-                      <td class="t9"><?php echo $movimientos['cobrado_propietario']?></td>
-                      <td class="t10"><?php echo $movimientos['cobrado_comercializadora']?></td>
+                      <td class="td_fecha"><?php echo $movimientos['fecha_operacion']?></td>
+                      <td class="td_fecha"><?php echo $movimientos['fecha_in']?></td>
+                      <td class="td_fecha"><?php echo $movimientos['fecha_out']?></td>
+                      <td class="td_numero"><?php echo $movimientos['desayunos']?></td>
+                      <td class="td_importe td_importante"><?php echo $movimientos['total_alquiler']?></td>
+                      <td class="td_detalle"><?php echo $movimientos['detalle']?></td>
+                      <td class="td_importe td_importante"><?php echo $movimientos['saldo']?></td>
+                      <td class="td_importe td_importante"><?php echo $movimientos['cobrado_propietario']?></td>
+                      <td class="td_importe td_importante"><?php echo $movimientos['cobrado_comercializadora']?></td>
+                      <td class="td_importe"><?php echo $movimientos['comision']?></td>
                     </tr>
             <?php
                 }
             ?>
+                <tr class="totales">
+                  <td class="td_fecha"><?php echo ""?></td>
+                  <td class="td_fecha"><?php echo ""?></td>
+                  <td class="td_fecha"><?php echo ""?></td>
+                  <td class="td_numero"><?php echo ""?></td>
+                  <td class="td_importe"><?php echo ""?></td>
+                  <td class="td_detalle"><?php echo ""?></td>
+                  <td class="td_importe"><?php echo $this->usuario->totales['saldo']?></td>
+                  <td class="td_importe"><?php echo $this->usuario->totales['cobrado_propietario']?></td>
+                  <td class="td_importe"><?php echo $this->usuario->totales['cobrado_comercializadora']?></td>
+                  <td class="td_importe"><?php echo ""?></td>
+                </tr>
           </table>
       <?php
         }else{ 

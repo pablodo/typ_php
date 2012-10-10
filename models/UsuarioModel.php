@@ -1,15 +1,11 @@
 <?php
 require_once "models/LiquidacionModel.php";
-class Funciones{
-    public static function formatFecha($fecha){
-        $fecha = new DateTime($fecha);
-        return $fecha->format('d-m-y');
-    }
-}
+require_once "lib/Funciones.php";
 
 class UsuarioModel{
     public $movimientos;
     public $liquidaciones;
+    public $totales;
     public $nombre;
     private $estados = array("", "Reservado", "Saldado", "", "Propietario");
 
@@ -28,6 +24,7 @@ class UsuarioModel{
         $this->data = array();
         $this->movimientos = array();
         $this->liquidaciones = array();
+        $this->totales = array();
         if (empty($username) or empty($password)) { 
             return;
         }
@@ -36,9 +33,9 @@ class UsuarioModel{
             $connection = mysql_connect($host, $user, $pass);
             mysql_select_db($db, $connection);
             $query = "SELECT * FROM UsuariosWeb
-                     INNER JOIN Propietarios on usrPropID = propID
-                     WHERE usrEmail='{$username}'  
-                     AND AES_DECRYPT(usrPass,'typ2012')='{$password}'"; 
+                      INNER JOIN Propietarios on usrPropID = propID
+                      WHERE usrEmail='{$username}'  
+                      AND AES_DECRYPT(usrPass,'typ2012')='{$password}'"; 
             $result = mysql_query($query, $connection);
             if(mysql_num_rows($result)){
                 $this->data = mysql_fetch_array($result);
@@ -51,6 +48,9 @@ class UsuarioModel{
                 $liquidacion = new Liquidacion($propID, $connection);
                 $this->liquidaciones = $liquidacion->data;
                 $this->cargarMovimientos($connection, $propID);
+                $this->totales['saldo'] = number_format($this->totales['saldo'], 2);
+                $this->totales['cobrado_propietario'] = number_format($this->totales['cobrado_propietario'], 2);
+                $this->totales['cobrado_comercializadora'] = number_format($this->totales['cobrado_comercializadora'], 2);
             }
             mysql_close($connection);
         }catch(Exception $e){}
@@ -67,6 +67,9 @@ class UsuarioModel{
         $result = mysql_query($query, $connection);
 
         $alquileres = array();
+        $this->totales['saldo'] = 0;
+        $this->totales['cobrado_propietario'] = 0;
+        $this->totales['cobrado_comercializadora'] = 0;
         while($row = mysql_fetch_array($result)){
             $movPropID = $row['alqCuentaImpPropID'];
             $estado = $row['movOperacion'];
@@ -131,6 +134,9 @@ class UsuarioModel{
                 $cobradoPropietario = $importe;
                 $saldo = $comision;
             }
+            $this->totales['saldo'] += $saldo;
+            $this->totales['cobrado_propietario'] += $cobradoPropietario;
+            $this->totales['cobrado_comercializadora'] += $cobradoComercializadora;
 
             $new_row = array('fecha_operacion' => $fechaOperacion, 
                              'fecha_in' => $fechaIN, 
