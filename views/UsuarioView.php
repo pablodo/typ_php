@@ -26,6 +26,7 @@ class UsuarioView{
             <th>Desayunos</th>
             <th>Total Alquiler</th>
             <th>Detalle de la Operación</th>
+            <th>Comisión</th>
             <th>Saldo</th>
             <th>Cobrado cta. Propietario</th>
             <th>Cobrado cta. Comercializadora</th>
@@ -56,9 +57,10 @@ class UsuarioView{
                       <td class="t4"><?php echo $movimientos['desayunos']?></td>
                       <td class="t5"><?php echo $movimientos['total_alquiler']?></td>
                       <td class="t6"><?php echo $movimientos['detalle']?></td>
-                      <td class="t7"><?php echo $movimientos['saldo']?></td>
-                      <td class="t8"><?php echo $movimientos['cobrado_propietario']?></td>
-                      <td class="t9"><?php echo $movimientos['cobrado_comercializadora']?></td>
+                      <td class="t7"><?php echo $movimientos['comision']?></td>
+                      <td class="t8"><?php echo $movimientos['saldo']?></td>
+                      <td class="t9"><?php echo $movimientos['cobrado_propietario']?></td>
+                      <td class="t10"><?php echo $movimientos['cobrado_comercializadora']?></td>
                     </tr>
             <?php
                 }

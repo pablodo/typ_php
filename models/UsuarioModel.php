@@ -55,7 +55,6 @@ class UsuarioModel{
             mysql_close($connection);
         }catch(Exception $e){}
     }
-
     private function cargarMovimientos($connection, $propID){
         $query = "SELECT * FROM Movimientos 
 			      INNER JOIN Alquileres ON movAlqID = alqID 
@@ -64,18 +63,55 @@ class UsuarioModel{
 			      LEFT JOIN Propietarios as p2 ON alqUF = p2.propUF 
                   WHERE (p1.propID = {$propID} OR p2.propID = {$propID}) 
                      AND movLiquidacion = 0 
-                  ORDER BY movFecha DESC";
+                  GROUP BY movID";
         $result = mysql_query($query, $connection);
 
+        $alquileres = array();
         while($row = mysql_fetch_array($result)){
             $movPropID = $row['alqCuentaImpPropID'];
-            $estado = $row['alqEstado'];
+            $estado = $row['movOperacion'];
             if ($movPropID > 0 && $movPropID != $propID){
                 /*Si tiene una cuenta de deposito, y no es la del 
                  * propietario actual, que siga de largo
                  */
                 continue;
             }
+        
+            $alqID = $row['alqID'];
+            if (! array_key_exists($alqID, $alquileres)){
+                $alquileres[$alqID] = array(
+                    'dif_imputacion' => $row['alqDifImputacion'],
+                    'sin_comision'   => $row['alqImporteSinComision']);                  
+            }
+            $importe = $row['movImporte'];
+            $difImputacion = $alquileres[$alqID]['dif_imputacion'];
+            $sinComision = $alquileres[$alqID]['sin_comision'];
+
+            if ($difImputacion > 0){
+                if ($importe >= $difImputacion){
+                    $importe -= $difImputacion;
+                    $difImputacion = 0.0;
+                }else{
+                    $importe = 0.0;
+                    $difImputacion -= $importe;
+                }
+            }
+            if ($sinComision > 0){
+                if ($importe >= $sinComision){
+                    $importe -= $sinComision;
+                    $sinComision = 0.0;
+                }else{
+                    $importe = 0.0;
+                    $sinComision -= $importe;
+                }
+            }
+            $alquileres[$alqID]['dif_imputacion'] = $difImputacion;
+            $alquileres[$alqID]['sin_comision'] = $sinComision;
+
+            if ($importe == 0){
+                continue;
+            }
+
             $fechaOperacion = Funciones::formatFecha($row['movFecha']);
             $fechaIN = Funciones::formatFecha($row['alqFIN']);
             $fechaOUT = Funciones::formatFecha($row['alqFOUT']);
@@ -85,13 +121,15 @@ class UsuarioModel{
             if ($estado > 0){
                 $detalle = $this->estados[$estado];
             }
-            $saldo = 0;
+            $comision = $importe / 100 * $row['ufPrecio'];
             $cobradoPropietario = 0;
             $cobradoComercializadora = 0;
             if ($row['movDestino'] == 1){
-                $cobradoComercializadora = $row['movImporte'];
+                $cobradoComercializadora = $importe;
+                $saldo = - $importe + $comision;
             } elseif ($row['movDestino'] == 2) {
-                $cobradoPropietario = $row['movImporte'];
+                $cobradoPropietario = $importe;
+                $saldo = $comision;
             }
 
             $new_row = array('fecha_operacion' => $fechaOperacion, 
@@ -100,6 +138,7 @@ class UsuarioModel{
                              'desayunos' => $desayunos,
                              'total_alquiler' => number_format($totalAlquiler, 2),
                              'detalle' => $detalle,
+                             'comision' => number_format($comision, 2),
                              'saldo' => number_format($saldo, 2),
                              'cobrado_propietario' => number_format($cobradoPropietario, 2),
                              'cobrado_comercializadora' => number_format($cobradoComercializadora, 2),

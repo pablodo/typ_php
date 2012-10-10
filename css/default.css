@@ -50,14 +50,14 @@ td {
 
 .movimientos {
     font-family: sans-serif;
-    width: 800px;
+    width: 900px;
 }
 
 .movimientos .t6{
     text-align: left;
 }
 
-.movimientos .t4, .t5, .t7, .t8, .t9{
+.movimientos .t4, .t5, .t7, .t8, .t9, .t10{
     text-align: right;
 }
 
@@ -65,7 +65,7 @@ td {
     width: 60px;
 }
 
-.movimientos .t5{
+.movimientos .t5, .t8{
     width: 100px;
 }
 
