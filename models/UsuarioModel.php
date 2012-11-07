@@ -2,6 +2,8 @@
 require_once "models/LiquidacionModel.php";
 require_once "lib/Funciones.php";
 
+const EXPENSAS = -1;
+
 class UsuarioModel{
     public $movimientos;
     public $liquidaciones;
@@ -57,11 +59,11 @@ class UsuarioModel{
     }
     private function cargarMovimientos($connection, $propID){
         $query = "SELECT * FROM Movimientos 
-			      INNER JOIN Alquileres ON movAlqID = alqID 
-			      INNER JOIN UnidadesFuncionales ON alqUF = ufID 
+			      LEFT JOIN Alquileres ON movAlqID = alqID 
+			      LEFT JOIN UnidadesFuncionales ON alqUF = ufID 
 			      LEFT JOIN Propietarios as p1 ON alqCuentaImpPropID = p1.propID 
 			      LEFT JOIN Propietarios as p2 ON alqUF = p2.propUF 
-                  WHERE (p1.propID = {$propID} OR p2.propID = {$propID}) 
+                  WHERE (p1.propID = {$propID} OR p2.propID = {$propID} or movPropietario = {$propID}) 
                      AND movLiquidacion = 0 
                   GROUP BY movID";
         $result = mysql_query($query, $connection);
@@ -70,6 +72,8 @@ class UsuarioModel{
         $this->totales['saldo'] = 0;
         $this->totales['cobrado_propietario'] = 0;
         $this->totales['cobrado_comercializadora'] = 0;
+        $this->totales['comisiones'] = 0;
+        $this->totales['expensas'] = 0;
         while($row = mysql_fetch_array($result)){
             $movPropID = $row['alqCuentaImpPropID'];
             $estado = $row['movOperacion'];
@@ -80,59 +84,72 @@ class UsuarioModel{
                 continue;
             }
         
-            $alqID = $row['alqID'];
-            if (! array_key_exists($alqID, $alquileres)){
-                $alquileres[$alqID] = array(
-                    'dif_imputacion' => $row['alqDifImputacion'],
-                    'sin_comision'   => $row['alqImporteSinComision']);                  
-            }
             $importe = $row['movImporte'];
-            $difImputacion = $alquileres[$alqID]['dif_imputacion'];
-            $sinComision = $alquileres[$alqID]['sin_comision'];
+            $fechaIN = "";
+            $fechaOUT = "";
+            $desayunos = "";
+            $totalAlquiler = "";
+            $comision = 0;
+            if ($estado != EXPENSAS){
+                $alqID = $row['alqID'];
+                if (! array_key_exists($alqID, $alquileres)){
+                    $alquileres[$alqID] = array(
+                        'dif_imputacion' => $row['alqDifImputacion'],
+                        'sin_comision'   => $row['alqImporteSinComision']);                  
+                }
+                $difImputacion = $alquileres[$alqID]['dif_imputacion'];
+                $sinComision = $alquileres[$alqID]['sin_comision'];
 
-            if ($difImputacion > 0){
-                if ($importe >= $difImputacion){
-                    $importe -= $difImputacion;
-                    $difImputacion = 0.0;
-                }else{
-                    $importe = 0.0;
-                    $difImputacion -= $importe;
+                if ($difImputacion > 0){
+                    if ($importe >= $difImputacion){
+                        $importe -= $difImputacion;
+                        $difImputacion = 0.0;
+                    }else{
+                        $importe = 0.0;
+                        $difImputacion -= $importe;
+                    }
                 }
-            }
-            if ($sinComision > 0){
-                if ($importe >= $sinComision){
-                    $importe -= $sinComision;
-                    $sinComision = 0.0;
-                }else{
-                    $importe = 0.0;
-                    $sinComision -= $importe;
+                if ($sinComision > 0){
+                    if ($importe >= $sinComision){
+                        $importe -= $sinComision;
+                        $sinComision = 0.0;
+                    }else{
+                        $importe = 0.0;
+                        $sinComision -= $importe;
+                    }
                 }
+                $alquileres[$alqID]['dif_imputacion'] = $difImputacion;
+                $alquileres[$alqID]['sin_comision'] = $sinComision;
+                $fechaIN = Funciones::formatFecha($row['alqFIN']);
+                $fechaOUT = Funciones::formatFecha($row['alqFOUT']);
+                $desayunos = $row['alqDesayunosImp'];
+                $totalAlquiler = $row['alqTotal'] - $row['alqDifImputacion'];
+                $comision = $importe / 100 * $row['ufPrecio'];
+                $this->totales['comisiones'] += $comision;
             }
-            $alquileres[$alqID]['dif_imputacion'] = $difImputacion;
-            $alquileres[$alqID]['sin_comision'] = $sinComision;
 
             if ($importe == 0){
                 continue;
             }
 
             $fechaOperacion = Funciones::formatFecha($row['movFecha']);
-            $fechaIN = Funciones::formatFecha($row['alqFIN']);
-            $fechaOUT = Funciones::formatFecha($row['alqFOUT']);
-            $desayunos = $row['alqDesayunosImp'];
-            $totalAlquiler = $row['alqTotal'] - $row['alqDifImputacion'];
             $detalle = $row['movDetalle'];
             if ($estado > 0){
                 $detalle = $this->estados[$estado];
             }
-            $comision = $importe / 100 * $row['ufPrecio'];
             $cobradoPropietario = 0;
             $cobradoComercializadora = 0;
-            if ($row['movDestino'] == 1){
-                $cobradoComercializadora = $importe;
-                $saldo = - $importe + $comision;
-            } elseif ($row['movDestino'] == 2) {
-                $cobradoPropietario = $importe;
-                $saldo = $comision;
+            if ($estado == EXPENSAS){
+                $saldo = $importe;
+                $this->totales['expensas'] += $saldo;
+            }else{
+                if ($row['movDestino'] == 1){
+                    $cobradoComercializadora = $importe;
+                    $saldo = - $importe + $comision;
+                } elseif ($row['movDestino'] == 2) {
+                    $cobradoPropietario = $importe;
+                    $saldo = $comision;
+                }
             }
             $this->totales['saldo'] += $saldo;
             $this->totales['cobrado_propietario'] += $cobradoPropietario;

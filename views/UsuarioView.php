@@ -1,9 +1,14 @@
 <?php
 class UsuarioView{
     private $usuario;
+    private $total_class;
 
     public function __construct($usuario){
         $this->usuario = $usuario;
+        $this->total_class = "td_positive";
+        if($this->usuario->totales['saldo'] < 0){
+            $this->total_class = "td_negative";
+        }
     }
     public function render(){
 ?>
@@ -72,10 +77,46 @@ class UsuarioView{
                   <td class="td_fecha"><?php echo ""?></td>
                   <td class="td_numero"><?php echo ""?></td>
                   <td class="td_importe"><?php echo ""?></td>
-                  <td class="td_detalle"><?php echo ""?></td>
-                  <td class="td_importe"><?php echo $this->usuario->totales['saldo']?></td>
+                  <td class="td_detalle"><?php echo "Totales"?></td>
+                  <td class="td_importe"><?php echo ""?></td>
                   <td class="td_importe"><?php echo $this->usuario->totales['cobrado_propietario']?></td>
                   <td class="td_importe"><?php echo $this->usuario->totales['cobrado_comercializadora']?></td>
+                  <td class="td_importe"><?php echo ""?></td>
+                </tr>
+                <tr class="totales">
+                  <td class="td_fecha"><?php echo ""?></td>
+                  <td class="td_fecha"><?php echo ""?></td>
+                  <td class="td_fecha"><?php echo ""?></td>
+                  <td class="td_numero"><?php echo ""?></td>
+                  <td class="td_importe"><?php echo ""?></td>
+                  <td class="td_detalle"><?php echo "Comisiones"?></td>
+                  <td class="td_importe"><?php echo $this->usuario->totales['comisiones']?></td>
+                  <td class="td_importe"><?php echo ""?></td>
+                  <td class="td_importe"><?php echo ""?></td>
+                  <td class="td_importe"><?php echo ""?></td>
+                </tr>
+                <tr class="totales">
+                  <td class="td_fecha"><?php echo ""?></td>
+                  <td class="td_fecha"><?php echo ""?></td>
+                  <td class="td_fecha"><?php echo ""?></td>
+                  <td class="td_numero"><?php echo ""?></td>
+                  <td class="td_importe"><?php echo ""?></td>
+                  <td class="td_detalle"><?php echo "Expensas"?></td>
+                  <td class="td_importe"><?php echo $this->usuario->totales['expensas']?></td>
+                  <td class="td_importe"><?php echo ""?></td>
+                  <td class="td_importe"><?php echo ""?></td>
+                  <td class="td_importe"><?php echo ""?></td>
+                </tr>
+                <tr class="totales">
+                  <td class="td_fecha"><?php echo ""?></td>
+                  <td class="td_fecha"><?php echo ""?></td>
+                  <td class="td_fecha"><?php echo ""?></td>
+                  <td class="td_numero"><?php echo ""?></td>
+                  <td class="td_importe"><?php echo ""?></td>
+                  <td class="td_detalle"><?php echo "Total"?></td>
+                  <td class="td_importe <?php echo $this->total_class ?>"><?php echo $this->usuario->totales['saldo']?></td>
+                  <td class="td_importe"><?php echo ""?></td>
+                  <td class="td_importe"><?php echo ""?></td>
                   <td class="td_importe"><?php echo ""?></td>
                 </tr>
           </table>

@@ -73,6 +73,14 @@ td {
     font-weight: bold;
 }
 
+.movimientos .td_positive{
+    color: rgb(250, 50, 50); /* RED */
+}
+
+.movimientos .td_negative{
+    color: rgb(0, 100, 0); /* GREEN */
+}
+
 .movimientos h2{
     margin-top: 0px;
     text-align: left;
