@@ -37,6 +37,9 @@ class Liquidacion {
                     //SALDO A FAVOR DE LA COMERCIALIZADORA (Positivo)
                     } else if($cobrar > $pagar and $cobrar - $pagar != $importe){
                         $saldo = $cobrar - $pagar - $importe;
+
+                    } else if ($cobrar == 0 and $pagar == 0) {
+                        $saldo = - $importe;
                     }
                     
                     $fecha = Funciones::formatFecha($row['liqFecha']);
@@ -44,7 +47,7 @@ class Liquidacion {
                         $new_row = array('fecha' => $fecha,
                                          'saldo' => $saldo);
                         array_push($this->data, $new_row);
-                        $saldoTotal += $saldo;
+                        $this->saldoTotal += $saldo;
                     }
                 }
             }

@@ -89,6 +89,18 @@ class UsuarioView{
                   <td class="td_fecha"><?php echo ""?></td>
                   <td class="td_numero"><?php echo ""?></td>
                   <td class="td_importe"><?php echo ""?></td>
+                  <td class="td_detalle"><?php echo "Saldo anterior"?></td>
+                  <td class="td_importe"><?php echo $this->usuario->totales['saldo_anterior']?></td>
+                  <td class="td_importe"><?php echo ""?></td>
+                  <td class="td_importe"><?php echo ""?></td>
+                  <td class="td_importe"><?php echo ""?></td>
+                </tr>
+                <tr class="totales">
+                  <td class="td_fecha"><?php echo ""?></td>
+                  <td class="td_fecha"><?php echo ""?></td>
+                  <td class="td_fecha"><?php echo ""?></td>
+                  <td class="td_numero"><?php echo ""?></td>
+                  <td class="td_importe"><?php echo ""?></td>
                   <td class="td_detalle"><?php echo "Comisiones"?></td>
                   <td class="td_importe"><?php echo $this->usuario->totales['comisiones']?></td>
                   <td class="td_importe"><?php echo ""?></td>

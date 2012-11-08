@@ -50,6 +50,8 @@ class UsuarioModel{
                 $liquidacion = new Liquidacion($propID, $connection);
                 $this->liquidaciones = $liquidacion->data;
                 $this->cargarMovimientos($connection, $propID);
+                $this->totales['saldo'] += $liquidacion->saldoTotal;
+                $this->totales['saldo_anterior'] = number_format($liquidacion->saldoTotal, 2);
                 $this->totales['saldo'] = number_format($this->totales['saldo'], 2);
                 $this->totales['cobrado_propietario'] = number_format($this->totales['cobrado_propietario'], 2);
                 $this->totales['cobrado_comercializadora'] = number_format($this->totales['cobrado_comercializadora'], 2);
