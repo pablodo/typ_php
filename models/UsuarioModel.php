@@ -90,7 +90,7 @@ class UsuarioModel{
             $fechaIN = "";
             $fechaOUT = "";
             $desayunos = "";
-            $totalAlquiler = "";
+            $totalAlquiler = 0;
             $comision = 0;
             if ($estado != EXPENSAS){
                 $alqID = $row['alqID'];
@@ -134,7 +134,6 @@ class UsuarioModel{
                 continue;
             }
 
-            $fechaOperacion = Funciones::formatFecha($row['movFecha']);
             $detalle = $row['movDetalle'];
             if ($estado > 0){
                 $detalle = $this->estados[$estado];
@@ -157,8 +156,7 @@ class UsuarioModel{
             $this->totales['cobrado_propietario'] += $cobradoPropietario;
             $this->totales['cobrado_comercializadora'] += $cobradoComercializadora;
 
-            $new_row = array('fecha_operacion' => $fechaOperacion, 
-                             'fecha_in' => $fechaIN, 
+            $new_row = array('fecha_in' => $fechaIN, 
                              'fecha_out' => $fechaOUT, 
                              'desayunos' => $desayunos,
                              'total_alquiler' => number_format($totalAlquiler, 2),

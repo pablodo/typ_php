@@ -25,7 +25,6 @@ class UsuarioView{
         if ($this->usuario->mostrarMovimientos() || $this->usuario->mostrarLiquidaciones()){
       ?>
           <table>
-            <th>Fecha Operacion</th>
             <th>Alquiler Desde</th>
             <th>Alquiler Hasta</th>
             <th>Desayunos</th>
@@ -40,7 +39,6 @@ class UsuarioView{
                   foreach($this->usuario->liquidaciones as $liquidaciones){
             ?>
                     <tr>
-                      <td class="td_fecha"><?php echo $liquidaciones['fecha']?></td>
                       <td class="td_fecha"><?php echo ""?></td>
                       <td class="td_fecha"><?php echo ""?></td>
                       <td class="td_numero"><?php echo ""?></td>
@@ -57,7 +55,6 @@ class UsuarioView{
                 foreach($this->usuario->movimientos as $movimientos){
             ?>
                     <tr>
-                      <td class="td_fecha"><?php echo $movimientos['fecha_operacion']?></td>
                       <td class="td_fecha"><?php echo $movimientos['fecha_in']?></td>
                       <td class="td_fecha"><?php echo $movimientos['fecha_out']?></td>
                       <td class="td_numero"><?php echo $movimientos['desayunos']?></td>
@@ -74,7 +71,6 @@ class UsuarioView{
                 <tr class="totales">
                   <td class="td_fecha"><?php echo ""?></td>
                   <td class="td_fecha"><?php echo ""?></td>
-                  <td class="td_fecha"><?php echo ""?></td>
                   <td class="td_numero"><?php echo ""?></td>
                   <td class="td_importe"><?php echo ""?></td>
                   <td class="td_detalle"><?php echo "Totales"?></td>
@@ -84,7 +80,6 @@ class UsuarioView{
                   <td class="td_importe"><?php echo ""?></td>
                 </tr>
                 <tr class="totales">
-                  <td class="td_fecha"><?php echo ""?></td>
                   <td class="td_fecha"><?php echo ""?></td>
                   <td class="td_fecha"><?php echo ""?></td>
                   <td class="td_numero"><?php echo ""?></td>
@@ -98,7 +93,6 @@ class UsuarioView{
                 <tr class="totales">
                   <td class="td_fecha"><?php echo ""?></td>
                   <td class="td_fecha"><?php echo ""?></td>
-                  <td class="td_fecha"><?php echo ""?></td>
                   <td class="td_numero"><?php echo ""?></td>
                   <td class="td_importe"><?php echo ""?></td>
                   <td class="td_detalle"><?php echo "Comisiones"?></td>
@@ -110,7 +104,6 @@ class UsuarioView{
                 <tr class="totales">
                   <td class="td_fecha"><?php echo ""?></td>
                   <td class="td_fecha"><?php echo ""?></td>
-                  <td class="td_fecha"><?php echo ""?></td>
                   <td class="td_numero"><?php echo ""?></td>
                   <td class="td_importe"><?php echo ""?></td>
                   <td class="td_detalle"><?php echo "Expensas"?></td>
@@ -120,7 +113,6 @@ class UsuarioView{
                   <td class="td_importe"><?php echo ""?></td>
                 </tr>
                 <tr class="totales">
-                  <td class="td_fecha"><?php echo ""?></td>
                   <td class="td_fecha"><?php echo ""?></td>
                   <td class="td_fecha"><?php echo ""?></td>
                   <td class="td_numero"><?php echo ""?></td>
