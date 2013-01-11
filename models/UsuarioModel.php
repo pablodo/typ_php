@@ -61,11 +61,10 @@ class UsuarioModel{
     }
     private function cargarMovimientos($connection, $propID){
         $query = "SELECT * FROM Movimientos 
-			      LEFT JOIN Alquileres ON movAlqID = alqID 
-			      LEFT JOIN UnidadesFuncionales ON alqUF = ufID 
-			      LEFT JOIN Propietarios as p1 ON alqCuentaImpPropID = p1.propID 
-			      LEFT JOIN Propietarios as p2 ON alqUF = p2.propUF 
-                  WHERE (p1.propID = {$propID} OR p2.propID = {$propID} or movPropietario = {$propID}) 
+                      LEFT JOIN Alquileres ON movAlqID = alqID 
+                      LEFT JOIN UnidadesFuncionales ON alqUF = ufID 
+                      LEFT JOIN Propietarios ON alqPropietarioImp = propID 
+                  WHERE (propID = {$propID} or movPropietario = {$propID}) 
                      AND movLiquidacion = 0 
                   GROUP BY movID";
         $result = mysql_query($query, $connection);
