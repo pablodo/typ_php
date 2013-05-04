@@ -20,7 +20,7 @@ class UsuarioView{
   </head>
   <body>
     <div class="main movimientos">
-    <h2>Bienvenido <?php echo $this->usuario->nombre ?></h2>
+      <h2>Bienvenido <?php echo $this->usuario->nombre ?></h2>
       <?php
         if ($this->usuario->mostrarMovimientos() || $this->usuario->mostrarLiquidaciones()){
       ?>
@@ -30,7 +30,7 @@ class UsuarioView{
             <th>Desayunos</th>
             <th>Total Alquiler</th>
             <th>Detalle de la Operación</th>
-            <th>Saldo</th>
+            <th>Pago de Expensas</th>
             <th>Cobrado cta. Propietario</th>
             <th>Cobrado cta. Comercializadora</th>
             <th>Comisión</th>
@@ -60,7 +60,7 @@ class UsuarioView{
                       <td class="td_numero"><?php echo $movimientos['desayunos']?></td>
                       <td class="td_importe td_importante"><?php echo $movimientos['total_alquiler']?></td>
                       <td class="td_detalle"><?php echo $movimientos['detalle']?></td>
-                      <td class="td_importe td_importante"><?php echo $movimientos['saldo']?></td>
+                      <td class="td_importe td_importante"><?php echo $movimientos['expensas']?></td>
                       <td class="td_importe td_importante"><?php echo $movimientos['cobrado_propietario']?></td>
                       <td class="td_importe td_importante"><?php echo $movimientos['cobrado_comercializadora']?></td>
                       <td class="td_importe"><?php echo $movimientos['comision']?></td>
@@ -124,6 +124,10 @@ class UsuarioView{
                   <td class="td_importe"><?php echo ""?></td>
                 </tr>
           </table>
+          <ul class="referencias">
+            <li id="comercializadora"><span>Saldo a favor Comercializadora</span></li>
+            <li id="propietario"><span>Saldo a favor Propietario</span></li>
+          </ul>
       <?php
         }else{ 
       ?>

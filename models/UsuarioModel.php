@@ -9,7 +9,7 @@ class UsuarioModel{
     public $liquidaciones;
     public $totales;
     public $nombre;
-    private $estados = array("", "Reservado", "Saldado", "", "Propietario");
+    private $estados = array("", "Seña", "Saldo Cancelado", "", "Propietario");
 
     public function __construct($username, $password){
         $this->cargar($username, $password);
@@ -139,9 +139,10 @@ class UsuarioModel{
             }
             $cobradoPropietario = 0;
             $cobradoComercializadora = 0;
+            $expensas = 0;
             if ($estado == EXPENSAS){
-                $saldo = $importe;
-                $this->totales['expensas'] += $saldo;
+                $expensas = $saldo = $importe;
+                $this->totales['expensas'] += $expensas;
             }else{
                 if ($row['movDestino'] == 1){
                     $cobradoComercializadora = $importe;
@@ -161,7 +162,7 @@ class UsuarioModel{
                              'total_alquiler' => number_format($totalAlquiler, 2),
                              'detalle' => $detalle,
                              'comision' => number_format($comision, 2),
-                             'saldo' => number_format($saldo, 2),
+                             'expensas' => number_format($expensas, 2),
                              'cobrado_propietario' => number_format($cobradoPropietario, 2),
                              'cobrado_comercializadora' => number_format($cobradoComercializadora, 2),
                             );
